@@ -60,7 +60,7 @@ class LinearRegression:
         # 定义损失函数
         def J(theta, X_b, y):
             try:
-                return np.sum((y - X_b.dot(theta)) ** 2) / len(y) #+0*np.sum(theta[1:])   #  求平均损失值
+                return np.sum((y - X_b.dot(theta)) ** 2) / len(y) +0.001*np.sum(theta[1:])   #  求平均损失值
             except:
                 return float('inf')
 
@@ -99,9 +99,9 @@ class LinearRegression:
 
             while cur_iter < n_iters:
                 gradient = dJ(theta, X_b, y)     #  对损失函数求导
-                # R = np.zeros([len(gradient)])
-                # R[1:] = theta[1:]
-                # gradient = gradient + 0*R
+                R = np.zeros([len(gradient)])      # 正则化处理
+                R[1:] = theta[1:]
+                gradient = gradient + 0.001*R
                 last_theta = theta              #  把当前的权重值赋予现在的last_theta
 
                 # 使用ada方法更改每个权重的学习率
